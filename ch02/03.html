@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>10_19 homework3 start script</p>
+
+    <script>
+      // 宣告常數練習
+      const BIRTHDAY = '2004-07-23';
+
+      // 自訂函式：根據生日計算年齡
+      function someCode(birthday) {
+        const birthDate = new Date(birthday);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      const age = someCode(BIRTHDAY);
+      alert('生日(BIRTHDAY): ' + BIRTHDAY + '\n年齡(age): ' + age);
+    </script>
+
+    <p>10_19 homework3 End script</p>  
+  </body>
+</html>
