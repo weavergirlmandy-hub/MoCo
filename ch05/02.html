@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>地理位置讀取</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    pre { background: #eee; padding: 10px; }
+    button { padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <h2>地理位置讀取</h2>
+
+  <button onclick="geo.setupGeolocation()">重新請求位置權限</button>
+
+  <h3>讀取結果</h3>
+  <pre id="geoDisplay">尚未取得資料...</pre>
+
+  <script>
+    // 放入前面的 SimpleGeo class
+    class SimpleGeo {
+      constructor() {
+        this.lat = null;
+        this.lon = null;
+        this.alt = null;
+
+        this.setupGeolocation();
+      }
+
+      setupGeolocation() {
+        if (!("geolocation" in navigator)) {
+          console.error("此裝置不支援地理位置 API");
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.handlePosition(position);
+            this.startWatch();
+          },
+          (error) => {
+            console.error("無法取得位置：", error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 8000,
+            maximumAge: 0
+          }
+        );
+      }
+
+      startWatch() {
+        this.watchId = navigator.geolocation.watchPosition(
+          (position) => this.handlePosition(position),
+          (error) => console.error("監聽位置錯誤：", error),
+          {
+            enableHighAccuracy: true,
+            timeout: 8000,
+            maximumAge: 1000
+          }
+        );
+      }
+
+      handlePosition(position) {
+        const coords = position.coords;
+
+        this.lat = coords.latitude;
+        this.lon = coords.longitude;
+        this.alt = coords.altitude;
+
+        console.log("緯度:", this.lat);
+        console.log("經度:", this.lon);
+        console.log("海拔:", this.alt);
+
+        const display = document.getElementById("geoDisplay");
+        if (display) {
+          display.textContent = `
+緯度: ${this.lat}
+經度: ${this.lon}
+海拔: ${this.alt}
+          `;
+        }
+      }
+    }
+
+    // 啟動
+    const geo = new SimpleGeo();
+  </script>
+</body>
+</html>
