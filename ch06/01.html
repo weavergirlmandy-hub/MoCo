@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch JSON Demo</title>
+</head>
+<body>
+  <h2>Fetch JSON Demo</h2>
+  <pre id="result">讀取中...</pre>
+
+  <script>
+    const url = "https://api.github.com/repos/weavergirlmandy-hub/MoCo/commits";
+
+    async function loadData() {
+      try {
+        const response = await fetch(url);   // 向 URL 發送請求
+        const data = await response.json();  // 將回傳資料轉成 JSON
+
+
+        document.getElementById("result").textContent =
+          JSON.stringify(data[0], null, 2);    // 格式化顯示 JSON
+
+      } catch (error) {
+        document.getElementById("result").textContent =
+          "讀取失敗：" + error;
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
