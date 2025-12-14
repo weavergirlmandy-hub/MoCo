@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <title>fetch POST</title>
+</head>
+<body>
+
+  <h3> POST </h3>
+
+  <button onclick="sendPost()">送出 POST</button>
+
+  <pre id="result">尚未送出請求</pre>
+
+  <script>
+    function sendPost() {
+      fetch("https://httpcan.org/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: "妙慈",
+          role: "student",
+          message: "Hello POST!",
+          time: new Date().toISOString()
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("result").textContent =
+          JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById("result").textContent =
+          "發生錯誤：" + error;
+      });
+    }
+  </script>
+
+</body>
+</html>
