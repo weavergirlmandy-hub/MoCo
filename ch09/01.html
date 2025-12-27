@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>行動裝置即時定位與狀態通訊系統</title>
+
+    <!-- CSS 寫在這裡 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>行動裝置即時定位與狀態通訊系統</h1>
+
+    <button onclick="getLocation()">取得目前位置</button>
+
+    <div class="box">
+        <p id="locationText">尚未取得位置</p>
+    </div>
+
+    <!-- JavaScript 寫在這裡 -->
+    <script>
+        function getLocation() {
+
+            // 檢查瀏覽器是否支援定位
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition);
+
+            } else {
+                document.getElementById("locationText").innerText =
+                    "此裝置不支援定位功能";
+            }
+        }
+
+        // 成功取得位置後執行
+        function showPosition(position) {
+
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            document.getElementById("locationText").innerText =
+                "緯度：" + latitude + "，經度：" + longitude;
+        }
+    </script>
+
+</body>
+</html>
